@@ -17,7 +17,6 @@ from dtaidistance import dtw,ed
 import bisect
 from scipy.cluster.hierarchy import linkage, fcluster
 from scipy.stats import poisson, expon
-from scipy.optimize import minimize
 import math
 import random
 
