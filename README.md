@@ -20,7 +20,7 @@ python comapre.py
 The script should take approximately 5 minutes to complete.
 
 ## Directory Structure
-comapre.py: Main script that runs the model.
-Datasets/: Contains input data required.
-out/: Stores the generated images.
-results/: Contains dictionaries of data produced by the model.
+- comapre.py: Main script that runs the model.
+- Datasets/: Contains input data required.
+- out/: Stores the generated images.
+- results/: Contains dictionaries of data produced by the model.
