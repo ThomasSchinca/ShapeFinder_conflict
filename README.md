@@ -1,4 +1,4 @@
-# Shapefinder: Reproduction Data
+# Shapefinder: Replication Data
 
 This repository contains the reproduction data for the paper "Accounting for variability in conflict dynamics: A pattern-based predictive model" introducing **Shapefinder**, a shape-based model designed to predict conflict fatalities.
 
