@@ -1,6 +1,6 @@
 # Shapefinder: Replication Data
 
-This repository contains the reproduction data for the paper "Accounting for variability in conflict dynamics: A pattern-based predictive model" introducing **Shapefinder**, a shape-based model designed to predict conflict fatalities.
+This repository contains the replication data for the paper "Accounting for variability in conflict dynamics: A pattern-based predictive model" introducing **Shapefinder**, a shape-based model designed to predict conflict fatalities.
 
 ## Overview
 The repository includes the necessary scripts and data to replicate the results presented in the paper. The primary script, `compare.py`, executes the Shapefinder model and generates output files that visualize and store prediction results.
@@ -20,7 +20,8 @@ python comapre.py
 The script should take approximately 5 minutes to complete.
 
 ## Directory Structure
-- comapre.py: Main script that runs the model.
+- comapre.py: Main script.
+- shape.py: Functions needed to run the model. 
 - Datasets/: Contains input data required.
 - out/: Stores the generated images.
 - results/: Contains dictionaries of data produced by the model.
