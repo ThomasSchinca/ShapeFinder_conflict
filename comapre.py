@@ -23,6 +23,10 @@ from scipy.stats import linregress
 import matplotlib.lines as mlines
 from sklearn.tree import DecisionTreeRegressor,plot_tree
 from scipy import stats
+from cycler import cycler
+
+plot_params = {"text.usetex":True,"font.family":"serif","font.size":20,"xtick.labelsize":20,"ytick.labelsize":20,"axes.labelsize":20,"figure.titlesize":20,"figure.figsize":(8,5),"axes.prop_cycle":cycler(color=['black','rosybrown','gray','indianred','red','maroon','silver',])}
+plt.rcParams.update(plot_params)
 
 # =============================================================================
 # Get Data
@@ -262,22 +266,6 @@ for coun in range(len(df_input_sub.columns)):
         linkage_matrix = linkage(tot_seq, method='ward')
         clusters = fcluster(linkage_matrix, horizon/3, criterion='distance')
         
-        dn=dendrogram(linkage_matrix,color_threshold=horizon/3,above_threshold_color='black')
-        # Access the lines (linkages) in the dendrogram and set their colors
-        for i, d in zip(dn['icoord'], dn['dcoord']):
-            x = 0.5 * sum(i[1:3])
-            y = d[1]
-            if y > horizon/3:
-                col = 'black'
-            else:
-                col = 'lightgray'
-            #plt.plot(i, d, color=col)
-        #plt.axhline(y=horizon/3, c='black', ls='--', lw=0.8)
-        #plt.xticks([])
-        #plt.yticks([])
-        #plt.savefig(os.path.join(out_paths["analysis"],f"dendogram_{coun}_2022.jpeg"),dpi=400,bbox_inches="tight")
-        #plt.show()
-        
         # Proportion of cases assigned to each cluster
         pr = pd.Series(clusters).value_counts(normalize=True).sort_index()
         # Save maximum proportion
@@ -381,16 +369,17 @@ for coun in range(len(df_input_sub.columns)):
         pred_tot_pr.append(pred_ori*(df_input_sub.iloc[-h_train:,coun].max()-df_input_sub.iloc[-h_train:,coun].min())+df_input_sub.iloc[-h_train:,coun].min())
         
         # Plot
-        # plt.figure(figsize=(10, 6))
-        # plt.plot(preds, label='Shape finder', linestyle="dashed",color='black',linewidth=2)
-        # plt.plot(df_preds_test_1.iloc[:12,coun].reset_index(drop=True), label='ViEWS ensemble',linestyle="dotted",color='black',linewidth=2)
-        # plt.plot(df_obs_1.iloc[:,coun].reset_index(drop=True),label='Actuals',linestyle="solid",color="black",linewidth=2)
-        # plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.08), ncol=5,fontsize=20)
-        # #plt.title(f"{df_input_sub.columns[coun]}",size=30)
-        # plt.xticks([0,2,4,6,8,10],["2022-01","2022-03","2022-05","2022-07","2022-09","2022-11"],size=25)
-        # plt.yticks(size=25)
-        # plt.savefig(f"out/compare_preds_{df_input_sub.columns[coun]}_2022.jpeg",dpi=400,bbox_inches="tight")
-        # plt.show()    
+        plt.figure(figsize=(10, 6))
+        plt.plot(preds, label='Shape finder', linestyle="dashed",color='black',linewidth=2)
+        plt.plot(df_preds_test_1.iloc[:12,coun].reset_index(drop=True), label='ViEWS ensemble',linestyle="dotted",color='black',linewidth=2)
+        plt.plot(df_obs_1.iloc[:,coun].reset_index(drop=True),label='Actuals',linestyle="solid",color="black",linewidth=2)
+        plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.08), ncol=5,fontsize=20)
+        #plt.title(f"{df_input_sub.columns[coun]}",size=30)
+        plt.xticks([0,2,4,6,8,10],["2022-01","2022-03","2022-05","2022-07","2022-09","2022-11"],size=25)
+        plt.yticks(size=25)
+        if df_input_sub.columns[coun]=="Niger":
+            plt.savefig(f"out/compare_preds_{df_input_sub.columns[coun]}_2022.jpeg",dpi=400,bbox_inches="tight")
+        plt.show()    
         
         # plt.figure(figsize=(10, 6))
         # plt.plot(df_preds_test_1.iloc[:12,coun].reset_index(drop=True), label='ViEWS ensemble',linestyle="dotted",color='black',linewidth=2)
@@ -485,22 +474,6 @@ for coun in range(len(df_input_sub.columns)):
         ### Apply hierachical clustering to sequences in reference repository ###        
         linkage_matrix = linkage(tot_seq, method='ward')
         clusters = fcluster(linkage_matrix, horizon/3, criterion='distance')
-        
-        dn=dendrogram(linkage_matrix,color_threshold=horizon/3,above_threshold_color='black')
-        # Access the lines (linkages) in the dendrogram and set their colors
-        for i, d in zip(dn['icoord'], dn['dcoord']):
-            x = 0.5 * sum(i[1:3])
-            y = d[1]
-            if y > horizon/3:
-                col = 'black'
-            else:
-                col = 'lightgray'
-            #plt.plot(i, d, color=col)
-        #plt.axhline(y=horizon/3, c='black', ls='--', lw=0.8)
-        #plt.xticks([])
-        #plt.yticks([])
-        #plt.savefig(os.path.join(out_paths["analysis"],f"dendogram_{coun}_2023.jpeg"),dpi=400,bbox_inches="tight")
-        #plt.show()
         
         # Proportion of cases assigned to each cluster        
         pr = pd.Series(clusters).value_counts(normalize=True).sort_index()
@@ -606,17 +579,18 @@ for coun in range(len(df_input_sub.columns)):
         # Append predictions
         pred_tot_pr.append(pred_ori*(df_input_sub.iloc[-h_train:,coun].max()-df_input_sub.iloc[-h_train:,coun].min())+df_input_sub.iloc[-h_train:,coun].min())
         
-        # # Plot 
-        # plt.figure(figsize=(10, 6))
-        # plt.plot(preds, label='Shape finder', linestyle="dashed",color='black',linewidth=2)
-        # plt.plot(df_preds_test_2.iloc[:12,coun].reset_index(drop=True), label='ViEWS ensemble',linestyle="dotted",color='black',linewidth=2)
-        # plt.plot(df_obs_2.iloc[:,coun].reset_index(drop=True),label='Actuals',linestyle="solid",color="black",linewidth=2)
-        # plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.08), ncol=5,fontsize=20)
-        # #plt.title(f"Predictions for {df_input_sub.columns[coun]}",size=30)
-        # plt.xticks([0,2,4,6,8,10],["2023-01","2023-03","2023-05","2023-07","2023-09","2023-11"],size=25)
-        # plt.yticks(size=25)
-        # plt.savefig(f"out/compare_preds_{df_input_sub.columns[coun]}_2023.jpeg",dpi=400,bbox_inches="tight")
-        # plt.show()    
+        # Plot 
+        plt.figure(figsize=(10, 6))
+        plt.plot(preds, label='Shape finder', linestyle="dashed",color='black',linewidth=2)
+        plt.plot(df_preds_test_2.iloc[:12,coun].reset_index(drop=True), label='ViEWS ensemble',linestyle="dotted",color='black',linewidth=2)
+        plt.plot(df_obs_2.iloc[:,coun].reset_index(drop=True),label='Actuals',linestyle="solid",color="black",linewidth=2)
+        plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.08), ncol=5,fontsize=20)
+        #plt.title(f"Predictions for {df_input_sub.columns[coun]}",size=30)
+        plt.xticks([0,2,4,6,8,10],["2023-01","2023-03","2023-05","2023-07","2023-09","2023-11"],size=25)
+        plt.yticks(size=25)
+        if df_input_sub.columns[coun]=="Colombia" or df_input_sub.columns[coun]=="Central African Republic" or df_input_sub.columns[coun]=="Cameroon":
+            plt.savefig(f"out/compare_preds_{df_input_sub.columns[coun]}_2023.jpeg",dpi=400,bbox_inches="tight")
+        plt.show()    
         
         # plt.figure(figsize=(10, 6))
         # plt.plot(df_preds_test_2.iloc[:12,coun].reset_index(drop=True), label='ViEWS ensemble',linestyle="dotted",color='black',linewidth=2)
@@ -4179,3 +4153,11 @@ plt.ylabel('Mean absolute percentage error (log-ratio)',fontsize=20)
 plt.xlim(-0.5,2.5)
 plt.savefig("out/mape.jpeg",dpi=400,bbox_inches="tight")
 plt.show()
+
+
+
+
+
+
+
+
