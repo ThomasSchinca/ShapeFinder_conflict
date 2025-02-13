@@ -1510,6 +1510,8 @@ df_match_w.index=inde
 df_match_w['MSE']=err_spe
 latex_table = df_match_w.sort_values('MSE').iloc[:5, :].to_latex(index=True, caption='Top 5 Entries by Log Ratio MSE', label='tab:top5_mse', float_format="%.2f")
 print(latex_table)
+with open('out/sf_overpredictions.tex', 'w') as o:
+     o.write(latex_table)
 
 # Validate categorization into hihg and low complexity cases
 ts_tot_l = []
